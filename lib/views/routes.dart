@@ -8,7 +8,9 @@ class Routes extends StatelessWidget {
   Widget build(BuildContext context) {
     // Método responsável por desenhar a tela do aplicativo.
     return MaterialApp(
-            // home: inicio(),
+      // home: inicio(),
+      debugShowCheckedModeBanner: false,
+
       routes: {
         '/': (context) => inicio(),
         '/acesso': (context) => Home_Page(),
