@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:protejase/views/inicio.dart';
 
 import 'home_page.dart';
 
@@ -9,7 +10,8 @@ class Routes extends StatelessWidget {
     return MaterialApp(
             // home: inicio(),
       routes: {
-        '/': (context) => Home_Page(),
+        '/': (context) => inicio(),
+        '/acesso': (context) => Home_Page(),
       },
 
       initialRoute: '/',
