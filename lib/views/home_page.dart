@@ -13,70 +13,62 @@ class _Inicio extends State<Home_Page> {
     return Scaffold(
       //início da tela
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Color.fromRGBO(111, 233, 225, 1),
         title: Text(
-          "Bem vindo e Proteja-se",
+          "Proteja-se",
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
         centerTitle: false,
       ),
 
       body: Container(
-        color: Colors.white,
-        alignment: Alignment.center,
-        height: double.infinity,
+        color: Colors.grey,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  
+            
 
-                  Text(
-                    "Acesso Liberado",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                          fontSize: 40,
-                          color: Colors.green,
-                    ),
+            Text(
+              "Acesso Liberado",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                    fontSize: 40,
+                    color: Colors.green,
+              ),
+            ),
+            // Text(
+            //   "Acesso Negado",
+            //   style: TextStyle(
+            //     color: Colors.red,
+            //   ),
+            // ),
+            Text(
+              "Sua temperatura: " + "89" + "ºC",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 40,
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(200),
+                ),
+                color: Colors.orange,
+              ),
+              width: double.infinity,
+              child: TextButton(
+                onPressed: () => {},
+                child: Text(
+                  "Solicitar temperatura",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 40,
+                    color: Colors.white,
                   ),
-                  // Text(
-                  //   "Acesso Negado",
-                  //   style: TextStyle(
-                  //     color: Colors.red,
-                  //   ),
-                  // ),
-                  Text(
-                    "Sua temperatura: " + "89" + "ºC",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 40,
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(200),
-                      ),
-                      color: Colors.orange,
-                    ),
-                    width: double.infinity,
-                    child: TextButton(
-                      onPressed: () => {},
-                      child: Text(
-                        "Solicitar temperatura",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ],
