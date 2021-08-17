@@ -21,7 +21,7 @@ class _Inicio extends State<inicio> {
                   Color.fromRGBO(
                       255, 255, 255, 0.4), //primeira cor, que vem de baixo
                   Color.fromRGBO(
-                      111, 233, 225, 0.695), //segunda cor, que vem de cima
+                      111, 233, 225, 0.8), //segunda cor, que vem de cima
                 ],
                 stops: [0.2, 0.8],
                 transform: GradientRotation(2.5 * pi))),
@@ -32,13 +32,16 @@ class _Inicio extends State<inicio> {
           children: [
             Column(
               children: [
-                Image.asset(
-                  "assets/images/black_in_black.png",
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.80,
+                  child: Image.asset(
+                    "assets/images/black_in_black.png",
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 Text(
                   "Seja bem-vindo(a)!",
-                  style: TextStyle(
-                      fontSize: 40, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 15,
@@ -48,20 +51,18 @@ class _Inicio extends State<inicio> {
                   padding: EdgeInsets.symmetric(horizontal: 25),
                   width: double.maxFinite,
                   child: TextButton(
-                    onPressed: () =>
-                        Navigator.of(context).pushNamed('/acesso'),
+                    onPressed: () => Navigator.of(context).pushNamed('/acesso'),
                     child: Text(
-                      "Acesso ao sistema",
+                      "Acesso ao estabelecimento",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 25,
                       ),
                     ),
                     style: ButtonStyle(
-                      shape:
-                          MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10))),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10))),
                       foregroundColor:
                           MaterialStateProperty.all<Color>(Colors.black),
                       backgroundColor: MaterialStateProperty.all<Color>(
