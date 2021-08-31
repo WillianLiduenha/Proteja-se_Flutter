@@ -8,12 +8,36 @@ class Home_Page extends StatefulWidget {
   _Inicio createState() => _Inicio();
 }
 
-String temp="";
+String temp = "";
 
 bool show_image = true;
 
 class _Inicio extends State<Home_Page> {
   TemperatureRepository repository = TemperatureRepository();
+
+  Future mensagem(BuildContext context, String texto) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (_) {
+        return AlertDialog(
+          title: Text(texto),
+          actions: [
+            FlatButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(
+                "OK",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +77,21 @@ class _Inicio extends State<Home_Page> {
               child: TextButton.icon(
                 onPressed: () async {
                   show_image
-                      ? temp = await repository.solicitarTemperatura()
+                      ?
+                      //  temp = '35'
+                      await repository.solicitarTemperatura()
                       : Container();
+
+                  temp == 'LOTACAO MAXIMA' && show_image
+                      ? await mensagem(
+                          context, "Lotação máxima atingida, volte outra hora.")
+                      : temp != 'LOTACAO MAXIMA' &&
+                              double.parse(temp) < 37.7 &&
+                              double.parse(temp) >= 35
+                          ? Container()
+                          : await mensagem(context,
+                              "A temperatura medida foi superior a 37.7 ºC. \nProcure um posto de saúde para identificar possíveis sintomas da COVID-19.\n Procure a sala de testes de COVID-19.");
+
                   setState(
                     () {
                       show_image = !show_image;
@@ -86,39 +123,66 @@ class _Inicio extends State<Home_Page> {
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Column(
-                          children: [
-                            Text(
-                              "Sua temperatura: ",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 40,
+                        temp == 'LOTACAO MAXIMA'
+                            ? Container(
+                                child: Text(
+                                  "Lotação Máxima",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 40,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              )
+                            : Column(
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "Sua temperatura: ",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40,
+                                        ),
+                                      ),
+                                      Text(
+                                        temp + " ºC",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 52,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  temp != 'LOTACAO MAXIMA' &&
+                                          double.parse(temp) < 37.7 &&
+                                          double.parse(temp) >= 35
+                                      ? Container(
+                                          child: Column(
+                                                                                        children: [
+                                              Text(
+                                                "Acesso Liberado",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 40,
+                                                  color: Colors.green,
+                                                ),
+                                              ),
+                                              Text(
+                                                  "Por favor, direcione-se para a porta dentro de 1(um) minuto, após o prazo, será necessário realizar este processo novamente."),
+                                            ],
+                                          ),
+                                        )
+                                      : Text(
+                                          "Acesso Negado",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 40,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                ],
                               ),
-                            ),
-                            Text(
-                              temp + " ºC",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 52,
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        Text(
-                          "Acesso Liberado",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 40,
-                            color: Colors.green,
-                          ),
-                        ),
-                        // Text(
-                        //   "Acesso Negado",
-                        //   style: TextStyle(
-                        //     color: Colors.red,
-                        //   ),
-                        // ),
                       ],
                     )),
         ],
