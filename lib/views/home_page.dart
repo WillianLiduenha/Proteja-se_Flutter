@@ -21,7 +21,17 @@ class _Inicio extends State<Home_Page> {
       barrierDismissible: true,
       builder: (_) {
         return AlertDialog(
-          title: Text(texto),
+          title: Container(
+            height: 35,
+            child: Text(
+              "Seu acesso foi negado!",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          content: Text(texto),
           actions: [
             FlatButton(
               onPressed: () => Navigator.of(context).pop(),
@@ -77,20 +87,20 @@ class _Inicio extends State<Home_Page> {
               child: TextButton.icon(
                 onPressed: () async {
                   show_image
-                      ?
-                      //  temp = '35'
-                      await repository.solicitarTemperatura()
+                      ? 
+                      //temp = '34'
+                       temp = await repository.solicitarTemperatura()
                       : Container();
 
                   temp == 'LOTACAO MAXIMA' && show_image
                       ? await mensagem(
                           context, "Lotação máxima atingida, volte outra hora.")
                       : temp != 'LOTACAO MAXIMA' &&
-                              double.parse(temp) < 37.7 &&
-                              double.parse(temp) >= 35
-                          ? Container()
-                          : await mensagem(context,
-                              "A temperatura medida foi superior a 37.7 ºC. \nProcure um posto de saúde para identificar possíveis sintomas da COVID-19.\n Procure a sala de testes de COVID-19.");
+                              double.parse(temp) > 37.7 &&
+                              show_image
+                          ? await mensagem(context,
+                              "A temperatura medida foi superior a 37.7 ºC. \n\nProcure um posto de saúde para identificar possíveis sintomas da COVID-19.\n\nProcure a sala de testes de COVID-19.")
+                          : Container();
 
                   setState(
                     () {
@@ -125,12 +135,19 @@ class _Inicio extends State<Home_Page> {
                       children: [
                         temp == 'LOTACAO MAXIMA'
                             ? Container(
-                                child: Text(
-                                  "Lotação Máxima",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 40,
-                                    color: Colors.red,
+                                child: TextButton(
+                                  onPressed: () {
+                                    mensagem(context,
+                                        "Lotação máxima atingida, volte outra hora.");
+                                  },
+                                  child: Text(
+                                    "Lotação Máxima",
+                                    style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 40,
+                                      color: Colors.red,
+                                    ),
                                   ),
                                 ),
                               )
@@ -159,7 +176,7 @@ class _Inicio extends State<Home_Page> {
                                           double.parse(temp) >= 35
                                       ? Container(
                                           child: Column(
-                                                                                        children: [
+                                            children: [
                                               Text(
                                                 "Acesso Liberado",
                                                 style: TextStyle(
@@ -173,12 +190,20 @@ class _Inicio extends State<Home_Page> {
                                             ],
                                           ),
                                         )
-                                      : Text(
-                                          "Acesso Negado",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 40,
-                                            color: Colors.red,
+                                      : TextButton(
+                                          onPressed: () {
+                                            mensagem(context,
+                                                "A temperatura medida foi superior a 37.7 ºC. \n\nProcure um posto de saúde para identificar possíveis sintomas da COVID-19.\n\nProcure a sala de testes de COVID-19.");
+                                          },
+                                          child: Text(
+                                            "Acesso Negado",
+                                            style: TextStyle(
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 40,
+                                              color: Colors.red,
+                                            ),
                                           ),
                                         ),
                                 ],
