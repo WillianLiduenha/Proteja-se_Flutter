@@ -87,9 +87,9 @@ class _Inicio extends State<Home_Page> {
               child: TextButton.icon(
                 onPressed: () async {
                   show_image
-                      ? 
+                      ?
                       //temp = 'LOTACAO MAXIMA'
-                        temp = await repository.solicitarTemperatura()
+                      temp = await repository.solicitarTemperatura()
                       : Container();
 
                   temp == 'LOTACAO MAXIMA' && show_image
@@ -98,9 +98,9 @@ class _Inicio extends State<Home_Page> {
                       : temp != 'LOTACAO MAXIMA' &&
                                   double.parse(temp) > 37.7 &&
                                   show_image ||
-                              double.parse(temp) < 35 && show_image
+                              double.parse(temp) < 33 && show_image
                           ? await mensagem(context,
-                              "A temperatura medida foi superior a 37.7ºC ou menor que a temperatura mínima definida (35ºC). \n\nProcure um posto de saúde para identificar possíveis sintomas da COVID-19.\n\nProcure a sala de testes de COVID-19.")
+                              "A temperatura medida foi superior a 37.7ºC ou menor que a temperatura mínima definida (33ºC). \n\nProcure um posto de saúde para identificar possíveis sintomas da COVID-19.\n\nProcure a sala de testes de COVID-19.")
                           : Container();
 
                   setState(
@@ -180,7 +180,7 @@ class _Inicio extends State<Home_Page> {
                                     ),
                                     temp != 'LOTACAO MAXIMA' &&
                                             double.parse(temp) < 37.7 &&
-                                            double.parse(temp) >= 35
+                                            double.parse(temp) >= 33
                                         ? Expanded(
                                             child: Column(
                                               mainAxisAlignment:
@@ -209,7 +209,7 @@ class _Inicio extends State<Home_Page> {
                                             child: TextButton(
                                               onPressed: () {
                                                 mensagem(context,
-                                                    "A temperatura medida foi superior a 37.7 ºC ou menor que a temperatura mínima definida (35ºC). \n\nProcure um posto de saúde para identificar possíveis sintomas da COVID-19.\n\nProcure a sala de testes de COVID-19.");
+                                                    "A temperatura medida foi superior a 37.7 ºC ou menor que a temperatura mínima definida (33ºC). \n\nProcure um posto de saúde para identificar possíveis sintomas da COVID-19.\n\nProcure a sala de testes de COVID-19.");
                                               },
                                               child: Text(
                                                 "Acesso Negado",
