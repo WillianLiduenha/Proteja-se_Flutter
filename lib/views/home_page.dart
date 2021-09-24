@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class Home_Page extends StatefulWidget {
 String temp = "";
 
 bool show_image = true;
+bool button_hab = true;
 
 class _Inicio extends State<Home_Page> {
   TemperatureRepository repository = TemperatureRepository();
@@ -82,33 +84,40 @@ class _Inicio extends State<Home_Page> {
                 borderRadius: BorderRadius.all(
                   Radius.circular(10),
                 ),
-                color: Color.fromRGBO(111, 233, 225, 1),
+                color:
+                    button_hab ? Color.fromRGBO(111, 233, 225, 1) : Colors.grey,
               ),
               child: TextButton.icon(
-                onPressed: () async {
-                  show_image
-                      ?
-                      //temp = 'LOTACAO MAXIMA'
-                      temp = await repository.solicitarTemperatura()
-                      : Container();
+                onPressed: button_hab
+                    ? () async {
+                        button_hab = false;
+                        show_image
+                            ? temp = '38.5'
+                            // temp = await repository.solicitarTemperatura()
+                            : Container();
 
-                  temp == 'LOTACAO MAXIMA' && show_image
-                      ? await mensagem(
-                          context, "Lotação máxima atingida, volte outra hora.")
-                      : temp != 'LOTACAO MAXIMA' &&
-                                  double.parse(temp) > 37.7 &&
-                                  show_image ||
-                              double.parse(temp) < 33 && show_image
-                          ? await mensagem(context,
-                              "A temperatura medida foi superior a 37.7ºC ou menor que a temperatura mínima definida (33ºC). \n\nProcure um posto de saúde para identificar possíveis sintomas da COVID-19.\n\nProcure a sala de testes de COVID-19.")
-                          : Container();
+                        temp == 'LOTACAO MAXIMA'
+                            ? show_image
+                                ? await mensagem(context,
+                                    "Lotação máxima atingida, volte outra hora.")
+                                : Container()
+                            : double.parse(temp) > 37.7 && show_image ||
+                                    double.parse(temp) < 33 && show_image
+                                ? await mensagem(context,
+                                    "A temperatura medida foi superior a 37.7ºC ou menor que a temperatura mínima definida (33ºC). \n\nProcure um posto de saúde para identificar possíveis sintomas da COVID-19.\n\nProcure a sala de testes de COVID-19.")
+                                : Container();
 
-                  setState(
-                    () {
-                      show_image = !show_image;
-                    },
-                  );
-                },
+                        setState(
+                          () {
+                            show_image = !show_image;
+                            Timer(Duration(seconds: 3), () {button_hab = true; setState(() {
+                              
+                            });});
+                            
+                          },
+                        );
+                      }
+                    : () {},
                 label: Text(
                   "   " + "Iniciar medição",
                   style: TextStyle(
@@ -178,51 +187,56 @@ class _Inicio extends State<Home_Page> {
                                         ],
                                       ),
                                     ),
-                                    temp != 'LOTACAO MAXIMA' &&
-                                            double.parse(temp) < 37.7 &&
-                                            double.parse(temp) >= 33
-                                        ? Expanded(
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Text(
-                                                  "Acesso Liberado",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 40,
-                                                    color: Colors.green,
+                                    temp != 'LOTACAO MAXIMA'
+                                        ? double.parse(temp) < 37.7 &&
+                                                double.parse(temp) >= 33
+                                            ? Expanded(
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: [
+                                                    Text(
+                                                      "Acesso Liberado",
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 40,
+                                                        color: Colors.green,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "Por favor, direcione-se para a porta dentro de 1(um) minuto, após o prazo, será necessário realizar este processo novamente.",
+                                                      style: TextStyle(
+                                                        fontSize: 20,
+                                                        color: Colors.black,
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            : Expanded(
+                                                child: TextButton(
+                                                  onPressed: () {
+                                                    mensagem(context,
+                                                        "A temperatura medida foi superior a 37.7 ºC ou menor que a temperatura mínima definida (33ºC). \n\nProcure um posto de saúde para identificar possíveis sintomas da COVID-19.\n\nProcure a sala de testes de COVID-19.");
+                                                  },
+                                                  child: Text(
+                                                    "Acesso Negado",
+                                                    style: TextStyle(
+                                                      decoration: TextDecoration
+                                                          .underline,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 40,
+                                                      color: Colors.red,
+                                                    ),
                                                   ),
                                                 ),
-                                                Text(
-                                                  "Por favor, direcione-se para a porta dentro de 1(um) minuto, após o prazo, será necessário realizar este processo novamente.",
-                                                  style: TextStyle(
-                                                    fontSize: 20,
-                                                    color: Colors.black,
-                                                  ),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        : Expanded(
-                                            child: TextButton(
-                                              onPressed: () {
-                                                mensagem(context,
-                                                    "A temperatura medida foi superior a 37.7 ºC ou menor que a temperatura mínima definida (33ºC). \n\nProcure um posto de saúde para identificar possíveis sintomas da COVID-19.\n\nProcure a sala de testes de COVID-19.");
-                                              },
-                                              child: Text(
-                                                "Acesso Negado",
-                                                style: TextStyle(
-                                                  decoration:
-                                                      TextDecoration.underline,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 40,
-                                                  color: Colors.red,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                              )
+                                        : Container(),
                                   ],
                                 ),
                               ),
