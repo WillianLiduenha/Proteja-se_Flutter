@@ -76,62 +76,7 @@ class _Inicio extends State<Home_Page> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Center(
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: 60,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ),
-                color:
-                    button_hab ? Color.fromRGBO(111, 233, 225, 1) : Colors.grey,
-              ),
-              child: TextButton.icon(
-                onPressed: button_hab
-                    ? () async {
-                        button_hab = false;
-                        show_image
-                            ? temp = '38.5'
-                            // temp = await repository.solicitarTemperatura()
-                            : Container();
-
-                        temp == 'LOTACAO MAXIMA'
-                            ? show_image
-                                ? await mensagem(context,
-                                    "Lotação máxima atingida, volte outra hora.")
-                                : Container()
-                            : double.parse(temp) > 37.7 && show_image ||
-                                    double.parse(temp) < 33 && show_image
-                                ? await mensagem(context,
-                                    "A temperatura medida foi superior a 37.7ºC ou menor que a temperatura mínima definida (33ºC). \n\nProcure um posto de saúde para identificar possíveis sintomas da COVID-19.\n\nProcure a sala de testes de COVID-19.")
-                                : Container();
-
-                        setState(
-                          () {
-                            show_image = !show_image;
-                            Timer(Duration(seconds: 3), () {button_hab = true; setState(() {
-                              
-                            });});
-                            
-                          },
-                        );
-                      }
-                    : () {},
-                label: Text(
-                  "   " + "Iniciar medição",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 36,
-                    color: Colors.black,
-                  ),
-                ),
-                icon: Container(
-                    width: 100,
-                    child: Image.asset("assets/images/termometro.png")),
-              ),
-            ),
-          ),
+         
           Container(
               color: Color.fromRGBO(232, 225, 225, 1),
               height: MediaQuery.of(context).size.height * 0.75,
@@ -241,7 +186,63 @@ class _Inicio extends State<Home_Page> {
                                 ),
                               ),
                       ],
-                    )),
+                    ),),
+                     Center(
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: 60,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
+                color:
+                    button_hab ? Color.fromRGBO(111, 233, 225, 1) : Colors.grey,
+              ),
+              child: TextButton.icon(
+                onPressed: button_hab
+                    ? () async {
+                        button_hab = false;
+                        show_image
+                            ? temp = '38.5'
+                            // temp = await repository.solicitarTemperatura()
+                            : Container();
+
+                        temp == 'LOTACAO MAXIMA'
+                            ? show_image
+                                ? await mensagem(context,
+                                    "Lotação máxima atingida, volte outra hora.")
+                                : Container()
+                            : double.parse(temp) > 37.7 && show_image ||
+                                    double.parse(temp) < 33 && show_image
+                                ? await mensagem(context,
+                                    "A temperatura medida foi superior a 37.7ºC ou menor que a temperatura mínima definida (33ºC). \n\nProcure um posto de saúde para identificar possíveis sintomas da COVID-19.\n\nProcure a sala de testes de COVID-19.")
+                                : Container();
+
+                        setState(
+                          () {
+                            show_image = !show_image;
+                            Timer(Duration(seconds: 5), () {button_hab = true; setState(() {
+                              
+                            });});
+                            
+                          },
+                        );
+                      }
+                    : () {},
+                label: Text(
+                  "   " + "Iniciar medição",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 36,
+                    color: Colors.black,
+                  ),
+                ),
+                icon: Container(
+                    width: 100,
+                    child: Image.asset("assets/images/termometro.png")),
+              ),
+            ),
+          ),
         ],
       ),
     );
