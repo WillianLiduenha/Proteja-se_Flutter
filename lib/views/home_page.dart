@@ -151,7 +151,7 @@ class _Inicio extends State<Home_Page> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      "Por favor, direcione-se para a porta dentro de 1(um) minuto, após o prazo, será necessário realizar este processo novamente.",
+                                                      "Por favor, direcione-se para a porta dentro de 1(um) minuto. Após o prazo, será necessário realizar este processo novamente.",
                                                       style: TextStyle(
                                                         fontSize: 20,
                                                         color: Colors.black,
