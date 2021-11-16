@@ -13,6 +13,7 @@ String temp = "";
 
 bool show_image = true;
 bool button_hab = true;
+bool show_text = false;
 
 class _Inicio extends State<Home_Page> {
   TemperatureRepository repository = TemperatureRepository();
@@ -76,118 +77,130 @@ class _Inicio extends State<Home_Page> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-         
           Container(
-              color: Color.fromRGBO(232, 225, 225, 1),
-              height: MediaQuery.of(context).size.height * 0.75,
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: show_image
-                  ? Container(
-                      child: Image.asset("assets/images/white_in_white.png"),
-                    )
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            color: Color.fromRGBO(232, 225, 225, 1),
+            height: MediaQuery.of(context).size.height * 0.75,
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: show_image
+                ? Container(
+                    child: Column(
                       children: [
-                        temp == 'LOTACAO MAXIMA'
-                            ? Container(
-                                child: TextButton(
-                                  onPressed: () {
-                                    mensagem(context,
-                                        "Lotação máxima atingida, volte outra hora.");
-                                  },
-                                  child: Text(
-                                    "Lotação Máxima atingida",
-                                    style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 40,
-                                      color: Colors.red,
-                                    ),
-                                    textAlign: TextAlign.center,
+                        Image.asset("assets/images/white_in_white.png"),
+                        show_text ? Text(
+                                  "Posicione seu pulso no local indicado...",
+                                  style: TextStyle(
+                                    
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 40,
+                                    color: Colors.black,
                                   ),
+                                  textAlign: TextAlign.center,
+                                )
+                               : Container(),
+                      ],
+                    ),
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      temp == 'LOTACAO MAXIMA'
+                          ? Container(
+                              child: TextButton(
+                                onPressed: () {
+                                  mensagem(context,
+                                      "Lotação máxima atingida, volte outra hora.");
+                                },
+                                child: Text(
+                                  "Lotação Máxima atingida",
+                                  style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 40,
+                                    color: Colors.red,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
-                              )
-                            : Expanded(
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            "Sua temperatura: ",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 40,
-                                            ),
+                              ),
+                            )
+                          : Expanded(
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          "Sua temperatura: ",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 40,
                                           ),
-                                          Text(
-                                            temp + " ºC",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 52,
-                                            ),
+                                        ),
+                                        Text(
+                                          temp + " ºC",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 52,
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                    temp != 'LOTACAO MAXIMA'
-                                        ? double.parse(temp) < 37.7 &&
-                                                double.parse(temp) >= 33
-                                            ? Expanded(
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: [
-                                                    Text(
-                                                      "Acesso Liberado",
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 40,
-                                                        color: Colors.green,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      "Por favor, direcione-se para a porta dentro de 1(um) minuto. Após o prazo, será necessário realizar este processo novamente.",
-                                                      style: TextStyle(
-                                                        fontSize: 20,
-                                                        color: Colors.black,
-                                                      ),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                            : Expanded(
-                                                child: TextButton(
-                                                  onPressed: () {
-                                                    mensagem(context,
-                                                        "A temperatura medida foi superior a 37.7 ºC ou menor que a temperatura mínima definida (33ºC). \n\nProcure um posto de saúde para identificar possíveis sintomas da COVID-19.\n\nProcure a sala de testes de COVID-19.");
-                                                  },
-                                                  child: Text(
-                                                    "Acesso Negado",
+                                  ),
+                                  temp != 'LOTACAO MAXIMA'
+                                      ? double.parse(temp) < 37.7 &&
+                                              double.parse(temp) >= 33
+                                          ? Expanded(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                children: [
+                                                  Text(
+                                                    "Acesso Liberado",
                                                     style: TextStyle(
-                                                      decoration: TextDecoration
-                                                          .underline,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 40,
-                                                      color: Colors.red,
+                                                      color: Colors.green,
                                                     ),
                                                   ),
+                                                  Text(
+                                                    "Por favor, direcione-se para a porta dentro de 1(um) minuto. Após o prazo, será necessário realizar este processo novamente.",
+                                                    style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.black,
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          : Expanded(
+                                              child: TextButton(
+                                                onPressed: () {
+                                                  mensagem(context,
+                                                      "A temperatura medida foi superior a 37.7 ºC ou menor que a temperatura mínima definida (33ºC). \n\nProcure um posto de saúde para identificar possíveis sintomas da COVID-19.\n\nProcure a sala de testes de COVID-19.");
+                                                },
+                                                child: Text(
+                                                  "Acesso Negado",
+                                                  style: TextStyle(
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 40,
+                                                    color: Colors.red,
+                                                  ),
                                                 ),
-                                              )
-                                        : Container(),
-                                  ],
-                                ),
+                                              ),
+                                            )
+                                      : Container(),
+                                ],
                               ),
-                      ],
-                    ),),
-                     Center(
+                            ),
+                    ],
+                  ),
+          ),
+          Center(
             child: Container(
               width: MediaQuery.of(context).size.width * 0.9,
               height: 60,
@@ -202,9 +215,17 @@ class _Inicio extends State<Home_Page> {
                 onPressed: button_hab
                     ? () async {
                         button_hab = false;
+                        setState(() {
+
+                          show_text = !show_text;
+                        });
                         show_image
-                            ? temp = '38.5'
-                            // temp = await repository.solicitarTemperatura()
+                            ? {
+                                //temp = 'LOTACAO MAXIMA'
+                                temp = await repository.solicitarTemperatura(),
+                                button_hab = true,
+                                
+                              }
                             : Container();
 
                         temp == 'LOTACAO MAXIMA'
@@ -221,10 +242,17 @@ class _Inicio extends State<Home_Page> {
                         setState(
                           () {
                             show_image = !show_image;
-                            Timer(Duration(seconds: 5), () {button_hab = true; setState(() {
-                              
-                            });});
                             
+
+                            Timer(
+                              Duration(seconds: 3),
+                              () {
+                                button_hab = true;
+                                setState(
+                                  () {},
+                                );
+                              },
+                            );
                           },
                         );
                       }
